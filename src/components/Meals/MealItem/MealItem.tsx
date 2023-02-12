@@ -16,6 +16,7 @@ export const MealItem: React.FC<{
   const addToCartHandler = (amount: number) => {
     context.addItemFunction({
       id: props.id,
+      name: props.name,
       amount: amount,
       price: props.price,
     });

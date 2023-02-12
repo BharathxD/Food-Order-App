@@ -4,9 +4,10 @@ type contextType = {
   items: any[];
   totalAmount: number;
   addItemFunction: (item: {
+    id: string;
+    name: string;
     price: number;
     amount: number;
-    id: string;
   }) => void;
   removeItemFunction: (id: string) => void;
 };
@@ -14,7 +15,12 @@ type contextType = {
 const CartContext = React.createContext<contextType>({
   items: [],
   totalAmount: 0,
-  addItemFunction: (item: { price: number; amount: number; id: string }) => {},
+  addItemFunction: (item: {
+    id: string;
+    name: string;
+    price: number;
+    amount: number;
+  }) => {},
   removeItemFunction: (id: string) => {},
 });
 
