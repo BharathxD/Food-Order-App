@@ -2,12 +2,13 @@ import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Modal.module.css";
 
-type componentProps = {
-  onCloseCart: () => void
-}
+type mondalProp = {
+  children: React.ReactNode;
+  onCloseCart: () => void;
+};
 
-const Backdrop: React.FC<componentProps> = (props) => {
-  return <div className={classes.backdrop} onClick={props.onCloseCart}/>;
+const Backdrop: React.FC<{ onCloseCart: () => void }> = (props) => {
+  return <div className={classes.backdrop} onClick={props.onCloseCart} />;
 };
 
 const ModalOverlay: React.FC<{ children: React.ReactNode }> = (props) => {
@@ -18,11 +19,14 @@ const ModalOverlay: React.FC<{ children: React.ReactNode }> = (props) => {
   );
 };
 
-export const Modal: React.FC<{ children: React.ReactNode, onCloseCart: () => void }> = (props) => {
+export const Modal: React.FC<mondalProp> = (props) => {
   const portalElement: HTMLElement | null = document.getElementById("overlays");
   return (
     <Fragment>
-      {ReactDOM.createPortal(<Backdrop onCloseCart={props.onCloseCart}/>, portalElement!)}
+      {ReactDOM.createPortal(
+        <Backdrop onCloseCart={props.onCloseCart} />,
+        portalElement!
+      )}
       {ReactDOM.createPortal(
         <ModalOverlay>{props.children}</ModalOverlay>,
         portalElement!
