@@ -1,8 +1,8 @@
 export type itemType = {
-  price: number;
-  amount: number;
   id: string;
   name: string;
+  price: number;
+  amount: number;
 };
 
 export const defaultCartState = {
@@ -30,8 +30,8 @@ export const cartReducer = (state: stateType, action: actionType) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.item?.id
     );
-    const existingCartItem = state.items[existingCartItemIndex];
-    let updatedItems;
+    const existingCartItem: itemType = state.items[existingCartItemIndex];
+    let updatedItems: itemType[];
 
     if (existingCartItem) {
       const updatedItem = {
@@ -53,9 +53,9 @@ export const cartReducer = (state: stateType, action: actionType) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.id
     );
-    const existingItem = state.items[existingCartItemIndex];
+    const existingItem: itemType = state.items[existingCartItemIndex];
     const updatedTotalAmount = state.totalAmount - existingItem.price;
-    let updatedItems;
+    let updatedItems: itemType[];
     if (existingItem.amount === 1) {
       updatedItems = state.items.filter(
         (item: { id: string }) => item.id !== action.id
