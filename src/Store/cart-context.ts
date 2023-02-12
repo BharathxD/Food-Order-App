@@ -10,6 +10,7 @@ type contextType = {
     amount: number;
   }) => void;
   removeItemFunction: (id: string) => void;
+  removeAllItemFunction: (name: string) => void;
 };
 
 const CartContext = React.createContext<contextType>({
@@ -22,6 +23,7 @@ const CartContext = React.createContext<contextType>({
     amount: number;
   }) => {},
   removeItemFunction: (id: string) => {},
+  removeAllItemFunction: (name: string) => {}
 });
 
 export default CartContext;

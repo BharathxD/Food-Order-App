@@ -6,6 +6,7 @@ type CartItemProps = {
   amount: number;
   onRemove: () => void;
   onAdd: () => void;
+  onRemoveAll: () => void;
   price: number;
 };
 
@@ -23,6 +24,7 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
       <div className={classes.actions}>
         <button onClick={props.onRemove}>−</button>
         <button onClick={props.onAdd}>+</button>
+        <button onClick={props.onRemoveAll}>x</button>
       </div>
     </li>
   );

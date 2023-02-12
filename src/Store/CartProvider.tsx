@@ -18,7 +18,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = (
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
-  console.log(cartState.items);
+  const removeAllItemFromCartHandler = (name: string) => {
+    dispatchCartAction({ type: "REMOVE_ALL", name: name });
+  };
 
   const cartContext = {
     id: Math.random().toString(),
@@ -26,6 +28,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = (
     totalAmount: cartState.totalAmount,
     addItemFunction: addItemToCartHandler,
     removeItemFunction: removeItemFromCartHandler,
+    removeAllItemFunction: removeAllItemFromCartHandler,
   };
 
   return (

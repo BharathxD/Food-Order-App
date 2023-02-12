@@ -19,6 +19,7 @@ type actionType = {
   type: string;
   item?: itemType;
   id?: string;
+  name?: string;
 };
 
 export const cartReducer = (state: stateType, action: actionType) => {
@@ -65,6 +66,27 @@ export const cartReducer = (state: stateType, action: actionType) => {
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     }
+
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    };
+  }
+
+  if (action.type === "REMOVE_ALL") {
+    const existingCartItemIndex = state.items.findIndex(
+      (item: { name: string }) => item.name === action.name
+    );
+
+    const existingItem: itemType = state.items[existingCartItemIndex];
+
+    const updatedTotalAmount =
+      state.totalAmount - existingItem.price * existingItem.amount;
+
+    let updatedItems: itemType[] = [...state.items];
+    updatedItems = updatedItems.filter((item) => {
+      return item.name !== action.name;
+    });
 
     return {
       items: updatedItems,
