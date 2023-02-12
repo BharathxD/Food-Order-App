@@ -6,10 +6,11 @@ type CartItemProps = {
   amount: number;
   onRemove: () => void;
   onAdd: () => void;
+  price: number;
 };
 
 export const CartItem: React.FC<CartItemProps> = (props) => {
-  const price = `$${props.amount}`;
+  const price = `$${props.price}`;
   return (
     <li className={classes["cart-item"]}>
       <div>
