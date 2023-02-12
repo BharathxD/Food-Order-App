@@ -9,7 +9,11 @@ export const Input: React.FC<{
   return (
     <div className={classes.input}>
       <label htmlFor={props.input.id}>{props.label}</label>
-      <input {...props.input} ref={props.amountInputRef} />
+      <input
+        {...props.input}
+        placeholder={props.label}
+        ref={props.amountInputRef}
+      />
     </div>
   );
 });

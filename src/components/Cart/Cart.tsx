@@ -37,17 +37,27 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   );
   return (
     <Modal onCloseCart={props.onCloseCart}>
-      {cartItems}
-      <div className={classes.total}>
-        <span>Total Amount</span>
-        <span>{totalAmount}</span>
-      </div>
-      <div className={classes.actions}>
-        <button className={classes["button-alt"]} onClick={props.onCloseCart}>
-          Close
-        </button>
-        {hasItems && <button className={classes.button}>Order</button>}
-      </div>
+      {!hasItems && (
+        <h1 className={classes.emptyMessage}>Your cart is empty.</h1>
+      )}
+      {hasItems && (
+        <React.Fragment>
+          {cartItems}
+          <div className={classes.total}>
+            <span>Total Amount</span>
+            <span>{totalAmount}</span>
+          </div>
+          <div className={classes.actions}>
+            <button
+              className={classes["button-alt"]}
+              onClick={props.onCloseCart}
+            >
+              Close
+            </button>
+            {hasItems && <button className={classes.button}>Order</button>}
+          </div>
+        </React.Fragment>
+      )}
     </Modal>
   );
 };

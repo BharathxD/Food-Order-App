@@ -4,6 +4,7 @@ import "./App.css";
 import { Meals } from "./components/Meals/Meals";
 import { Cart } from "./components/Cart/Cart";
 import { CartProvider } from "./Store/CartProvider";
+import "./App.css";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState<boolean>(false);

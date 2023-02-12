@@ -11,7 +11,9 @@ export const Header: React.FC<HeaderProps> = (props) => {
   return (
     <Fragment>
       <header className={classes.header}>
-        <h1>ReactMeals</h1>
+        <span className={classes.headerContainer}>
+          <h1>ReactMeals</h1>
+        </span>
         <HeaderCartButton onClickHandler={props.onShowCart} />
       </header>
       <div className={classes["main-image"]}>
