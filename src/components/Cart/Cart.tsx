@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import classes from "./Cart.module.css";
 import { Modal } from "../UI/Modal";
 import { useContext } from "react";
@@ -11,15 +11,15 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;
   const hasItems = context.items.length > 0;
-  const cartItemAddHandler = (item: ProductInfoType) => {
+  const cartItemAddHandler = useCallback((item: ProductInfoType) => {
     context.addItemFunction({ ...item, amount: 1 });
-  };
-  const cartItemRemoveHandler = (id: string) => {
+  }, []);
+  const cartItemRemoveHandler = useCallback((id: string) => {
     context.removeItemFunction(id);
-  };
-  const cartItemRemoveAllHandler = (name: string) => {
+  }, []);
+  const cartItemRemoveAllHandler = useCallback((name: string) => {
     context.removeAllItemFunction(name);
-  };
+  }, []);
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {context.items.map((item) => (

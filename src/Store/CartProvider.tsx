@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useCallback } from "react";
 import CartContext from "./cart-context";
 import { cartReducer, ProductInfoType, defaultCartState } from "./cartReducer";
 
@@ -10,17 +10,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = (
     defaultCartState
   );
 
-  const addItemToCartHandler = (item: ProductInfoType) => {
+  const addItemToCartHandler = useCallback((item: ProductInfoType) => {
     dispatchCartAction({ type: "ADD", item: item });
-  };
+  }, []);
 
-  const removeItemFromCartHandler = (id: string) => {
+  const removeItemFromCartHandler = useCallback((id: string) => {
     dispatchCartAction({ type: "REMOVE", id: id });
-  };
+  }, []);
 
-  const removeAllItemFromCartHandler = (name: string) => {
+  const removeAllItemFromCartHandler = useCallback((name: string) => {
     dispatchCartAction({ type: "REMOVE_ALL", name: name });
-  };
+  }, []);
 
   const cartContext = {
     id: Math.random().toString(),

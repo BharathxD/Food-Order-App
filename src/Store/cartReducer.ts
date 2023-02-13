@@ -6,7 +6,7 @@ export type ProductInfoType = {
 };
 
 export const defaultCartState: CartState = {
-  items: [{ name: "", id: "", price: 0, amount: 0 }],
+  items: [],
   totalAmount: 0,
 };
 
