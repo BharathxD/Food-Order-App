@@ -1,6 +1,7 @@
+import React from "react";
 import classes from "./MealsSummary.module.css";
 
-export const MealsSummary: React.FC = () => {
+export const MealsSummary: React.FC = React.memo(() => {
   return (
     <section className={classes.summary}>
       <h2>Delicious Food, Delivered To You</h2>
@@ -14,4 +15,4 @@ export const MealsSummary: React.FC = () => {
       </p>
     </section>
   );
-};
+});
