@@ -1,28 +1,28 @@
-export type itemType = {
+export type ProductInfoType = {
   id: string;
   name: string;
   price: number;
   amount: number;
 };
 
-export const defaultCartState = {
-  items: [],
+export const defaultCartState: CartState = {
+  items: [{ name: "", id: "", price: 0, amount: 0 }],
   totalAmount: 0,
 };
 
-type stateType = {
+type CartState = {
+  items: ProductInfoType[];
   totalAmount: number;
-  items: itemType[];
 };
 
-type actionType = {
+type CartAction = {
   type: string;
-  item?: itemType;
+  item?: ProductInfoType;
   id?: string;
   name?: string;
 };
 
-export const cartReducer = (state: stateType, action: actionType) => {
+export const cartReducer = (state: CartState, action: CartAction) => {
   if (action.type === "ADD") {
     if (!action.item) return state;
 
@@ -31,8 +31,8 @@ export const cartReducer = (state: stateType, action: actionType) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.item?.id
     );
-    const existingCartItem: itemType = state.items[existingCartItemIndex];
-    let updatedItems: itemType[];
+    const existingCartItem: ProductInfoType = state.items[existingCartItemIndex];
+    let updatedItems: ProductInfoType[];
 
     if (existingCartItem) {
       const updatedItem = {
@@ -54,9 +54,9 @@ export const cartReducer = (state: stateType, action: actionType) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.id
     );
-    const existingItem: itemType = state.items[existingCartItemIndex];
+    const existingItem: ProductInfoType = state.items[existingCartItemIndex];
     const updatedTotalAmount = state.totalAmount - existingItem.price;
-    let updatedItems: itemType[];
+    let updatedItems: ProductInfoType[];
     if (existingItem.amount === 1) {
       updatedItems = state.items.filter(
         (item: { id: string }) => item.id !== action.id
@@ -78,12 +78,12 @@ export const cartReducer = (state: stateType, action: actionType) => {
       (item: { name: string }) => item.name === action.name
     );
 
-    const existingItem: itemType = state.items[existingCartItemIndex];
+    const existingItem: ProductInfoType = state.items[existingCartItemIndex];
 
     const updatedTotalAmount =
       state.totalAmount - existingItem.price * existingItem.amount;
 
-    let updatedItems: itemType[] = [...state.items];
+    let updatedItems: ProductInfoType[] = [...state.items];
     updatedItems = updatedItems.filter((item) => {
       return item.name !== action.name;
     });

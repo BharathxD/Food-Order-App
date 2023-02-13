@@ -1,27 +1,24 @@
 import React from "react";
 
-type contextType = {
-  items: any[];
+type ProductInfoType = {
+  id: string;
+  name: string;
+  price: number;
+  amount: number;
+};
+
+type ContextType = {
+  items: ProductInfoType[];
   totalAmount: number;
-  addItemFunction: (item: {
-    id: string;
-    name: string;
-    price: number;
-    amount: number;
-  }) => void;
+  addItemFunction: (item: ProductInfoType) => void;
   removeItemFunction: (id: string) => void;
   removeAllItemFunction: (name: string) => void;
 };
 
-const CartContext = React.createContext<contextType>({
-  items: [],
+const CartContext = React.createContext<ContextType>({
+  items: [{ name: "", id: "", price: 0, amount: 0 }],
   totalAmount: 0,
-  addItemFunction: (item: {
-    id: string;
-    name: string;
-    price: number;
-    amount: number;
-  }) => {},
+  addItemFunction: (item: ProductInfoType) => {},
   removeItemFunction: (id: string) => {},
   removeAllItemFunction: (name: string) => {},
 });
