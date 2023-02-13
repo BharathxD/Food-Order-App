@@ -4,14 +4,14 @@ import { Modal } from "../UI/Modal";
 import { useContext } from "react";
 import CartContext from "../../Store/cart-context";
 import { CartItem } from "./CartItem";
-import { itemType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
+import { ProductInfoType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
 
 export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   const context = useContext(CartContext);
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;
   const hasItems = context.items.length > 0;
-  const cartItemAddHandler = (item: itemType) => {
+  const cartItemAddHandler = (item: ProductInfoType) => {
     context.addItemFunction({ ...item, amount: 1 });
   };
   const cartItemRemoveHandler = (id: string) => {
