@@ -1,6 +1,6 @@
 import classes from "./MealsSummary.module.css";
 
-export const MealsSummary = () => {
+export const MealsSummary: React.FC = () => {
   return (
     <section className={classes.summary}>
       <h2>Delicious Food, Delivered To You</h2>

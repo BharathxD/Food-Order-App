@@ -1,11 +1,22 @@
 import React from "react";
 import classes from "./Input.module.css";
 
-export const Input: React.FC<{
-  amountInputRef: React.MutableRefObject<HTMLInputElement | undefined>;
+type InputTagType = {
+  id: string;
+  type: string;
+  min?: string;
+  max?: string;
+  step?: string;
+  defaultValue?: string;
+};
+
+type InputProp = {
+  amountInputRef: React.Ref<HTMLInputElement>;
   label: string;
-  input: any;
-}> = React.forwardRef((props, ref) => {
+  input: InputTagType;
+};
+
+export const Input: React.FC<InputProp> = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
       <label htmlFor={props.input.id}>{props.label}</label>

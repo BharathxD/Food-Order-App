@@ -6,7 +6,7 @@ export const MealItemForm: React.FC<{
   onAddToCart: (amount: number) => void;
 }> = (props) => {
   const [isValid, setIsValid] = useState<boolean>(true);
-  const amountInputRef = useRef<HTMLInputElement>();
+  const amountInputRef = useRef<HTMLInputElement>(null);
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     const enteredAmount = amountInputRef.current!.value;

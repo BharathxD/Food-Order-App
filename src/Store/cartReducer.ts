@@ -31,7 +31,8 @@ export const cartReducer = (state: CartState, action: CartAction) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.item?.id
     );
-    const existingCartItem: ProductInfoType = state.items[existingCartItemIndex];
+    const existingCartItem: ProductInfoType =
+      state.items[existingCartItemIndex];
     let updatedItems: ProductInfoType[];
 
     if (existingCartItem) {

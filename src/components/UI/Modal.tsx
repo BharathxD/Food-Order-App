@@ -2,16 +2,24 @@ import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Modal.module.css";
 
-type mondalProp = {
-  children: React.ReactNode;
-  onCloseCart: () => void;
+//? TYPE DECLARATION ?//
+
+type BackdropProp = () => void;
+
+type ModelOverlayProp = React.ReactNode;
+
+type ModalProp = {
+  children: ModelOverlayProp;
+  onCloseCart: BackdropProp;
 };
 
-const Backdrop: React.FC<{ onCloseCart: () => void }> = (props) => {
+const Backdrop: React.FC<{ onCloseCart: BackdropProp }> = (props) => {
   return <div className={classes.backdrop} onClick={props.onCloseCart} />;
 };
 
-const ModalOverlay: React.FC<{ children: React.ReactNode }> = (props) => {
+//?--?//
+
+const ModalOverlay: React.FC<{ children: ModelOverlayProp }> = (props) => {
   return (
     <div className={classes.modal}>
       <div className={classes.content}>{props.children}</div>
@@ -19,7 +27,7 @@ const ModalOverlay: React.FC<{ children: React.ReactNode }> = (props) => {
   );
 };
 
-export const Modal: React.FC<mondalProp> = (props) => {
+export const Modal: React.FC<ModalProp> = (props) => {
   const portalElement: HTMLElement | null = document.getElementById("overlays");
   return (
     <Fragment>
