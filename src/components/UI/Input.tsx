@@ -12,7 +12,7 @@ type InputTagType = {
 };
 
 type InputProp = {
-  amountInputRef: React.Ref<HTMLInputElement>;
+  inputRef: React.Ref<HTMLInputElement>;
   label?: string;
   input: InputTagType;
 };
@@ -21,7 +21,7 @@ export const Input: React.FC<InputProp> = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
       {props.label && <label htmlFor={props.input.id}>{props.label}</label>}
-      <input {...props.input} ref={props.amountInputRef} />
+      <input {...props.input} ref={props.inputRef} />
     </div>
   );
 });

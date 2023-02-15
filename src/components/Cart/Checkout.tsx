@@ -1,6 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import classes from "./Checkout.module.css";
 import { Input } from "../UI/Input";
+import { CheckoutType } from "../../Store/Checkout.types";
+import { useHTTP } from "../../hooks/useHTTP";
+import CartContext from "../../Store/cart-context";
 
 interface ICheckoutProps {
   onCancel: () => void;
@@ -8,9 +11,19 @@ interface ICheckoutProps {
 
 const isEmpty = (value: string) =>
   value.trim() === "" && value.trim().length === 0;
-const isFiveChars = (value: string) => value.trim().length === 5;
+const isFiveChars = (value: number) => value.toString().length === 5;
 
 export const Checkout: React.FC<ICheckoutProps> = (props) => {
+  const context = useContext(CartContext);
+  const [data, setData] = useState<CheckoutType>();
+  const response = useHTTP({
+    url: "https://star-wars-f4c01-default-rtdb.firebaseio.com/Checkout.json",
+    method: "POST",
+    body: data,
+  });
+  useEffect(() => {
+    response.useHttpHandler();
+  }, [data]);
   const [formInputValidity, setFormInputValidity] = useState({
     name: true,
     city: true,
@@ -27,7 +40,7 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
     event.preventDefault();
     const name = nameInputRef.current!.value;
     const street = streetInputRef.current!.value;
-    const postal = postalInputRef.current!.value;
+    const postal: number = parseInt(postalInputRef.current!.value);
     const city = cityInputRef.current!.value;
     const nameIsValid = !isEmpty(name);
     const streetIsValid = !isEmpty(street);
@@ -45,6 +58,14 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
       console.log("INVALID");
       return;
     }
+    const data: CheckoutType = {
+      name: name,
+      city: city,
+      street: street,
+      postalCode: postal,
+      meals: context.items,
+    };
+    setData(data);
     nameInputRef.current!.value = "";
     streetInputRef.current!.value = "";
     postalInputRef.current!.value = "";
@@ -101,6 +122,14 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
             inputRef={cityInputRef}
           />
           {!formInputValidity.city && <p>Enter a valid City Name</p>}
+        </div>
+        <div className={classes.success}>
+          {response.error &&
+            !response.loading &&
+            "Your Order couldn't be placed, try again later."}
+          {!response.error &&
+            !response.loading &&
+            "Your Order has been placed."}
         </div>
       </div>
       <div className={classes.actions}>

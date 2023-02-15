@@ -35,6 +35,7 @@ export const MealItemForm: React.FC<{
             max: "5",
             step: "1",
             defaultValue: "1",
+            placeholder: "Amount",
           }}
         />
         <button type="submit">+ Add</button>

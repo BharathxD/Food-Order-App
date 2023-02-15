@@ -6,9 +6,12 @@ import CartContext from "../../Store/cart-context";
 import { CartItem } from "./CartItem";
 import { ProductInfoType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
 import { Checkout } from "./Checkout";
+import { CheckoutType } from "../../Store/Checkout.types";
+import { useHTTP } from "../../hooks/useHTTP";
 
 export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   const [isCheckout, setIsCheckout] = useState<boolean>(false);
+  const [checkout, setCheckout] = useState<CheckoutType[]>([]);
   const context = useContext(CartContext);
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;
@@ -40,6 +43,7 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
       ))}
     </ul>
   );
+
   const modalAction = (
     <div className={classes.actions}>
       <button type="button" onClick={props.onCloseCart}>
