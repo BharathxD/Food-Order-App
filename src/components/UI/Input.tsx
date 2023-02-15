@@ -4,6 +4,7 @@ import classes from "./Input.module.css";
 type InputTagType = {
   id: string;
   type: string;
+  placeholder?: string;
   min?: string;
   max?: string;
   step?: string;
@@ -12,19 +13,15 @@ type InputTagType = {
 
 type InputProp = {
   amountInputRef: React.Ref<HTMLInputElement>;
-  label: string;
+  label?: string;
   input: InputTagType;
 };
 
 export const Input: React.FC<InputProp> = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
-      <label htmlFor={props.input.id}>{props.label}</label>
-      <input
-        {...props.input}
-        placeholder={props.label}
-        ref={props.amountInputRef}
-      />
+      {props.label && <label htmlFor={props.input.id}>{props.label}</label>}
+      <input {...props.input} ref={props.amountInputRef} />
     </div>
   );
 });

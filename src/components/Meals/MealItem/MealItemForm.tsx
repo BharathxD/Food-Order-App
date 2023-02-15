@@ -27,7 +27,7 @@ export const MealItemForm: React.FC<{
       <form onSubmit={submitHandler} className={classes.form}>
         <Input
           label="Amount"
-          amountInputRef={amountInputRef}
+          inputRef={amountInputRef}
           input={{
             id: "amount",
             type: "number",
