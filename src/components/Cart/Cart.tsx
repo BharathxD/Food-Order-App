@@ -1,13 +1,14 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import classes from "./Cart.module.css";
 import { Modal } from "../UI/Modal";
 import { useContext } from "react";
 import CartContext from "../../Store/cart-context";
 import { CartItem } from "./CartItem";
 import { ProductInfoType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
-import { Checkout } from "../Meals/Checkout";
+import { Checkout } from "./Checkout";
 
 export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
+  const [isCheckout, setIsCheckout] = useState<boolean>(false);
   const context = useContext(CartContext);
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;
@@ -21,6 +22,9 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   const cartItemRemoveAllHandler = useCallback((name: string) => {
     context.removeAllItemFunction(name);
   }, []);
+  const orderHandler = () => {
+    setIsCheckout(true);
+  };
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {context.items.map((item) => (
@@ -36,6 +40,16 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
       ))}
     </ul>
   );
+  const modalAction = (
+    <div className={classes.actions}>
+      <button type="button" onClick={props.onCloseCart}>
+        Cancel
+      </button>
+      <button className={classes.submit} onClick={orderHandler}>
+        Confirm
+      </button>
+    </div>
+  );
   return (
     <Modal onCloseCart={props.onCloseCart}>
       {!hasItems && (
@@ -48,10 +62,8 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
             <span>Total Amount</span>
             <span>{totalAmount}</span>
           </div>
-          
-          <Checkout
-            onCancel={props.onCloseCart}
-          />
+          {!isCheckout && modalAction}
+          {isCheckout && <Checkout onCancel={props.onCloseCart} />}
         </React.Fragment>
       )}
     </Modal>

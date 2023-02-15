@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import classes from "./Checkout.module.css";
 
 interface ICheckoutProps {
@@ -5,10 +6,17 @@ interface ICheckoutProps {
 }
 
 export const Checkout: React.FC<ICheckoutProps> = (props) => {
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const streetInputRef = useRef<HTMLInputElement>(null);
+  const postalInputRef = useRef<HTMLInputElement>(null);
+  const cityInputRef = useRef<HTMLInputElement>(null);
   const confirmHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    const name = nameInputRef.current!.value;
+    const street = streetInputRef.current!.value;
+    const postal = postalInputRef.current!.value;
+    const city = cityInputRef.current!.value;
   };
-
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
       <div>
@@ -29,7 +37,9 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button className={classes.submit}>Confirm</button>
+        <button onClick={confirmHandler} className={classes.submit}>
+          Confirm
+        </button>
       </div>
     </form>
   );
