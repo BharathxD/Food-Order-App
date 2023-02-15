@@ -5,6 +5,7 @@ import { useContext } from "react";
 import CartContext from "../../Store/cart-context";
 import { CartItem } from "./CartItem";
 import { ProductInfoType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
+import { Checkout } from "../Meals/Checkout";
 
 export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
   const context = useContext(CartContext);
@@ -47,15 +48,10 @@ export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
             <span>Total Amount</span>
             <span>{totalAmount}</span>
           </div>
-          <div className={classes.actions}>
-            <button
-              className={classes["button-alt"]}
-              onClick={props.onCloseCart}
-            >
-              Close
-            </button>
-            {hasItems && <button className={classes.button}>Order</button>}
-          </div>
+          
+          <Checkout
+            onCancel={props.onCloseCart}
+          />
         </React.Fragment>
       )}
     </Modal>

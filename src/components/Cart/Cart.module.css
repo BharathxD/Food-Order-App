@@ -4,6 +4,8 @@
   padding: 10px 20px;
   max-height: 20rem;
   overflow: auto;
+  border: 1px solid #ccc;
+  border-radius: 20px;
 }
 
 .emptyMessage {
@@ -18,8 +20,10 @@
   align-items: center;
   font-weight: bold;
   font-size: 1.5rem;
-  padding: 10px 20px;
+  padding: 0 20px;
   margin: 1rem 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
 }
 
 .actions {
