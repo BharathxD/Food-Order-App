@@ -1,10 +1,10 @@
 import React from "react";
-import { ProductInfoType } from "./cartReducer";
+import { ProductCartType } from "../Types/ProductCart.types";
 
 interface IContextType {
-  items: ProductInfoType[];
+  items: ProductCartType[];
   totalAmount: number;
-  addItemFunction(item: ProductInfoType): void;
+  addItemFunction(item: ProductCartType): void;
   removeItemFunction(id: string): void;
   removeAllItemFunction(name: string): void;
 }
@@ -12,7 +12,7 @@ interface IContextType {
 const CartContext = React.createContext<IContextType>({
   items: [{ name: "", id: "", price: 0, amount: 0 }],
   totalAmount: 0,
-  addItemFunction: (item: ProductInfoType) => {},
+  addItemFunction: (item: ProductCartType) => {},
   removeItemFunction: (id: string) => {},
   removeAllItemFunction: (name: string) => {},
 });

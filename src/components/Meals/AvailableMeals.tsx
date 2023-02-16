@@ -3,7 +3,7 @@ import classes from "./AvailableMeals.module.css";
 import { Card } from "../UI/Card";
 import { MealItem } from "./MealItem/MealItem";
 import { useHTTP } from "../../Hooks/useHTTP";
-import { ProductType } from "../../Types/ProductType.types";
+import { ProductType } from "../../Types/Product.types";
 
 export const AvailableMeals = () => {
   const useMealData = useHTTP({

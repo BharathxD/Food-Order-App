@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import classes from "./Cart.module.css";
+
+import CartContext from "../../Context/cartContext";
 import { Modal } from "../UI/Modal";
-import { useContext } from "react";
-import CartContext from "../../Context/cart-context";
 import { CartItem } from "./CartItem";
-import { ProductInfoType } from "../../Context/cartReducer"; // I've declared the type here, incase of any confusion
+import { ProductCartType } from "../../Types/ProductCart.types";
 import { Checkout } from "./Checkout";
 import { CheckoutType } from "../../Types/Checkout.types";
 
@@ -15,7 +15,7 @@ export const Cart: React.FC<{ onCloseCart(): void }> = (props) => {
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;
   const hasItems = context.items.length > 0;
-  const cartItemAddHandler = useCallback((item: ProductInfoType) => {
+  const cartItemAddHandler = useCallback((item: ProductCartType) => {
     context.addItemFunction({ ...item, amount: 1 });
   }, []);
   const cartItemRemoveHandler = useCallback((id: string) => {

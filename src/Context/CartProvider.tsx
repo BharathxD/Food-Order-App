@@ -1,6 +1,7 @@
 import React, { useReducer, useCallback } from "react";
-import CartContext from "./cart-context";
-import { cartReducer, ProductInfoType, defaultCartState } from "./cartReducer";
+import CartContext from "./cartContext";
+import { cartReducer, defaultCartState } from "./cartReducer";
+import { ProductCartType } from "../Types/ProductCart.types";
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = (
   props
@@ -10,7 +11,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = (
     defaultCartState
   );
 
-  const addItemToCartHandler = useCallback((item: ProductInfoType) => {
+  const addItemToCartHandler = useCallback((item: ProductCartType) => {
     dispatchCartAction({ type: "ADD", item: item });
   }, []);
 

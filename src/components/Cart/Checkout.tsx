@@ -3,17 +3,15 @@ import classes from "./Checkout.module.css";
 import { Input } from "../UI/Input";
 import { CheckoutType } from "../../Types/Checkout.types";
 import { useHTTP } from "../../Hooks/useHTTP";
-import CartContext from "../../Context/cart-context";
+import CartContext from "../../Context/cartContext";
 
 interface ICheckoutProps {
   onCancel(): void;
 }
 
-const validateInput = (value: string, key: string) => {
-  const isEmpty = value.trim() === "";
-  const isPostalCode = key === "postalCode" && value.length === 5;
-  return !isEmpty && isPostalCode;
-};
+const isEmpty = (value: string) =>
+  value.trim() === "" && value.trim().length === 0;
+const isFiveChars = (value: string) => value.trim().length === 5;
 
 export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
   const context = useContext(CartContext);
@@ -43,7 +41,6 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
   const cityInputRef = useRef<HTMLInputElement>(null);
 
   const confirmHandler = (event: React.FormEvent) => {
-
     event.preventDefault();
 
     const name = nameInputRef.current!.value;
@@ -51,10 +48,10 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
     const postal = postalInputRef.current!.value;
     const city = cityInputRef.current!.value;
 
-    const nameIsValid = validateInput(name, "name");
-    const streetIsValid = validateInput(street, "street");
-    const postalIsValid = validateInput(postal, "postalCode");
-    const cityIsValid = validateInput(city, "city");
+    const nameIsValid = !isEmpty(name);
+    const streetIsValid = !isEmpty(street);
+    const postalIsValid = isFiveChars(postal);
+    const cityIsValid = !isEmpty(city);
 
     const formIsValid =
       nameIsValid && streetIsValid && postalIsValid && cityIsValid;
@@ -64,7 +61,7 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
       street: streetIsValid,
       postalCode: postalIsValid,
     });
-    
+
     if (!formIsValid) {
       console.log("INVALID");
       return;
@@ -135,12 +132,10 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
           {!formInputValidity.city && <p>Enter a valid City Name</p>}
         </div>
         <div className={classes.success}>
-          {response.hasError &&
-            !response.isLoading &&
+          {data &&
+            response.hasError &&
             "Your Order couldn't be placed, try again later."}
-          {!response.hasError &&
-            !response.isLoading &&
-            "Your Order has been placed."}
+          {data && !response.hasError && "Your Order has been placed."}
         </div>
       </div>
       <div className={classes.actions}>

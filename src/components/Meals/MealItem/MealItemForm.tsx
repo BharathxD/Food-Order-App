@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import classes from "./MealItemForm.module.css";
 import { Input } from "../../UI/Input";
 import { FormEvent, useRef, useState } from "react";
@@ -23,7 +24,7 @@ export const MealItemForm: React.FC<{
     props.onAddToCart(enteredAmountNumber);
   };
   return (
-    <>
+    <Fragment>
       <form onSubmit={submitHandler} className={classes.form}>
         <Input
           label="Amount"
@@ -41,6 +42,6 @@ export const MealItemForm: React.FC<{
         <button type="submit">+ Add</button>
         {!isValid && <p>Please enter a valid amount (1-5).</p>}
       </form>
-    </>
+    </Fragment>
   );
 };

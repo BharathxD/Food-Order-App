@@ -1,9 +1,4 @@
-export type ProductInfoType = {
-  id: string;
-  name: string;
-  price: number;
-  amount: number;
-};
+import { ProductCartType } from "../Types/ProductCart.types";
 
 export const defaultCartState: CartState = {
   items: [],
@@ -11,13 +6,13 @@ export const defaultCartState: CartState = {
 };
 
 type CartState = {
-  items: ProductInfoType[];
+  items: ProductCartType[];
   totalAmount: number;
 };
 
 type CartAction = {
   type: string;
-  item?: ProductInfoType;
+  item?: ProductCartType;
   id?: string;
   name?: string;
 };
@@ -31,9 +26,9 @@ export const cartReducer = (state: CartState, action: CartAction) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.item?.id
     );
-    const existingCartItem: ProductInfoType =
+    const existingCartItem: ProductCartType =
       state.items[existingCartItemIndex];
-    let updatedItems: ProductInfoType[];
+    let updatedItems: ProductCartType[];
 
     if (existingCartItem) {
       const updatedItem = {
@@ -55,9 +50,9 @@ export const cartReducer = (state: CartState, action: CartAction) => {
     const existingCartItemIndex = state.items.findIndex(
       (item: { id: string }) => item.id === action.id
     );
-    const existingItem: ProductInfoType = state.items[existingCartItemIndex];
+    const existingItem: ProductCartType = state.items[existingCartItemIndex];
     const updatedTotalAmount = state.totalAmount - existingItem.price;
-    let updatedItems: ProductInfoType[];
+    let updatedItems: ProductCartType[];
     if (existingItem.amount === 1) {
       updatedItems = state.items.filter(
         (item: { id: string }) => item.id !== action.id
@@ -79,12 +74,12 @@ export const cartReducer = (state: CartState, action: CartAction) => {
       (item: { name: string }) => item.name === action.name
     );
 
-    const existingItem: ProductInfoType = state.items[existingCartItemIndex];
+    const existingItem: ProductCartType = state.items[existingCartItemIndex];
 
     const updatedTotalAmount =
       state.totalAmount - existingItem.price * existingItem.amount;
 
-    let updatedItems: ProductInfoType[] = [...state.items];
+    let updatedItems: ProductCartType[] = [...state.items];
     updatedItems = updatedItems.filter((item) => {
       return item.name !== action.name;
     });
