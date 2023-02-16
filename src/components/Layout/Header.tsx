@@ -4,7 +4,7 @@ import mealsImage from "../../assets/meals.jpg";
 import classes from "./Header.module.css";
 
 interface HeaderProps {
-  onShowCart: () => void;
+  onShowCart(): void;
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {

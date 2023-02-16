@@ -1,4 +1,4 @@
-import { ProductInfoType } from "./cartReducer";
+import { ProductInfoType } from "../Context/cartReducer";
 
 export type CheckoutType = {
   name: string;

@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import CartContext from "../../../Store/cart-context";
+import CartContext from "../../../Context/cart-context";
 import classes from "./MealItem.module.css";
 import { MealItemForm } from "./MealItemForm";
-import { ProductType } from "../../../Store/ProductType.types";
-import { ProductInfoType } from "../../../Store/cartReducer";
+import { ProductType } from "../../../Types/ProductType.types";
 
 export const MealItem: React.FC<ProductType> = (props) => {
   const context = useContext(CartContext);

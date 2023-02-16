@@ -1,25 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Fragment, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Modal.module.css";
 
 //? TYPE DECLARATION ?//
 
-type BackdropProp = () => void;
-
-type ModelOverlayProp = React.ReactNode;
-
 type ModalProp = {
-  children: ModelOverlayProp;
-  onCloseCart: BackdropProp;
+  children: ReactNode;
+  onCloseCart(): void;
 };
 
-const Backdrop: React.FC<{ onCloseCart: BackdropProp }> = (props) => {
+const Backdrop: React.FC<{ onCloseCart(): void }> = (props) => {
   return <div className={classes.backdrop} onClick={props.onCloseCart} />;
 };
 
 //?--?//
 
-const ModalOverlay: React.FC<{ children: ModelOverlayProp }> = (props) => {
+const ModalOverlay: React.FC<{ children: ReactNode }> = (props) => {
   return (
     <div className={classes.modal}>
       <div className={classes.content}>{props.children}</div>

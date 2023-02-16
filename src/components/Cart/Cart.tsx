@@ -2,14 +2,13 @@ import React, { useCallback, useState } from "react";
 import classes from "./Cart.module.css";
 import { Modal } from "../UI/Modal";
 import { useContext } from "react";
-import CartContext from "../../Store/cart-context";
+import CartContext from "../../Context/cart-context";
 import { CartItem } from "./CartItem";
-import { ProductInfoType } from "../../Store/cartReducer"; // I've declared the type here, incase of any confusion
+import { ProductInfoType } from "../../Context/cartReducer"; // I've declared the type here, incase of any confusion
 import { Checkout } from "./Checkout";
-import { CheckoutType } from "../../Store/Checkout.types";
-import { useHTTP } from "../../hooks/useHTTP";
+import { CheckoutType } from "../../Types/Checkout.types";
 
-export const Cart: React.FC<{ onCloseCart: () => void }> = (props) => {
+export const Cart: React.FC<{ onCloseCart(): void }> = (props) => {
   const [isCheckout, setIsCheckout] = useState<boolean>(false);
   const [checkout, setCheckout] = useState<CheckoutType[]>([]);
   const context = useContext(CartContext);

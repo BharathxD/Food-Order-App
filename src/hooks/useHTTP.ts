@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ProductType } from "../Store/ProductType.types";
-import { CheckoutType } from "../Store/Checkout.types";
+import { ProductType } from "../Types/ProductType.types";
+import { CheckoutType } from "../Types/Checkout.types";
 
 interface IhttpConfig {
   url: string;

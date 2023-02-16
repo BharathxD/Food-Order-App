@@ -4,9 +4,9 @@ import classes from "./CartItem.module.css";
 type CartItemProps = {
   name: string;
   amount: number;
-  onRemove: () => void;
-  onAdd: () => void;
-  onRemoveAll: () => void;
+  onRemove(): void;
+  onAdd(): void;
+  onRemoveAll(): void;
   price: number;
 };
 

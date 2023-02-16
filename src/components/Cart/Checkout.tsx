@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import classes from "./Checkout.module.css";
 import { Input } from "../UI/Input";
-import { CheckoutType } from "../../Store/Checkout.types";
-import { useHTTP } from "../../hooks/useHTTP";
-import CartContext from "../../Store/cart-context";
+import { CheckoutType } from "../../Types/Checkout.types";
+import { useHTTP } from "../../Hooks/useHTTP";
+import CartContext from "../../Context/cart-context";
 
 interface ICheckoutProps {
-  onCancel: () => void;
+  onCancel(): void;
 }
 
 const validateInput = (value: string, key: string) => {
@@ -23,9 +23,11 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
     method: "POST",
     body: data,
   });
+
   useEffect(() => {
     response.useHttpHandler();
   }, [data]);
+
   const [formInputValidity, setFormInputValidity] = useState<{
     [key: string]: boolean;
   }>({
@@ -41,7 +43,9 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
   const cityInputRef = useRef<HTMLInputElement>(null);
 
   const confirmHandler = (event: React.FormEvent) => {
+
     event.preventDefault();
+
     const name = nameInputRef.current!.value;
     const street = streetInputRef.current!.value;
     const postal = postalInputRef.current!.value;
@@ -60,6 +64,7 @@ export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
       street: streetIsValid,
       postalCode: postalIsValid,
     });
+    
     if (!formIsValid) {
       console.log("INVALID");
       return;
