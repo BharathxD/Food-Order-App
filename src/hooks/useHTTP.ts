@@ -2,53 +2,59 @@ import { useState, useEffect } from "react";
 import { ProductType } from "../Store/ProductType.types";
 import { CheckoutType } from "../Store/Checkout.types";
 
-type httpArgumentsType = {
+interface IhttpConfig {
   url: string;
   method?: string;
   body?: CheckoutType;
-  header?: {};
-};
+  headers?: {};
+}
 
-export const useHTTP = (httpArguments: httpArgumentsType) => {
+export const useHTTP = ({
+  url,
+  method = "GET",
+  body,
+  headers,
+}: IhttpConfig) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [product, setProduct] = useState<ProductType[] | Response>([]);
+  const [fetchedData, setFetchedData] = useState<ProductType[] | Response>([]);
   const fetchProductHandler = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response: Response = await fetch(httpArguments.url, {
-        method: httpArguments.method ? httpArguments.method : "GET",
-        body: httpArguments.body ? JSON.stringify(httpArguments.body) : null,
-        headers: httpArguments.header ? httpArguments.header : {},
+      const response: Response = await fetch(url, {
+        method,
+        body: body ? JSON.stringify(body) : null,
+        headers: headers || {},
       });
-      if (!response.ok) throw new Error("Something went wrong");
-      if (httpArguments.method == "POST") {
-        setProduct(response);
+      if (!response.ok)
+        throw new Error(`${response.statusText} | ${response.status}`);
+      if (method === "POST") {
+        setFetchedData(response);
         setLoading(false);
         return;
       } else {
         const result: ProductType[] = await response.json();
-        let loadedMeals: ProductType[] = [];
-        for (const key in result) {
-          loadedMeals.push({
-            id: key,
-            name: result[key].name,
-            description: result[key].description,
-            price: result[key].price,
-          });
-        }
-        setLoading(false);
-        setProduct(loadedMeals);
+        const loadedData = Object.entries(result).map(
+          ([id, { name, description, price }]) => ({
+            id,
+            name,
+            description,
+            price,
+          })
+        );
+        setFetchedData(loadedData);
       }
     } catch (e) {
       setError((e as DOMException).message);
+    } finally {
+      setLoading(false);
     }
   };
   return {
-    loading: loading,
-    error: error,
-    data: product,
+    isLoading: loading,
+    hasError: error,
+    responseData: fetchedData,
     useHttpHandler: fetchProductHandler,
   };
 };

@@ -124,11 +124,11 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
           {!formInputValidity.city && <p>Enter a valid City Name</p>}
         </div>
         <div className={classes.success}>
-          {response.error &&
-            !response.loading &&
+          {response.hasError &&
+            !response.isLoading &&
             "Your Order couldn't be placed, try again later."}
-          {!response.error &&
-            !response.loading &&
+          {!response.hasError &&
+            !response.isLoading &&
             "Your Order has been placed."}
         </div>
       </div>
