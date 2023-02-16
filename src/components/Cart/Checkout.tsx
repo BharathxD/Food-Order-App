@@ -9,11 +9,13 @@ interface ICheckoutProps {
   onCancel: () => void;
 }
 
-const isEmpty = (value: string) =>
-  value.trim() === "" && value.trim().length === 0;
-const isFiveChars = (value: number) => value.toString().length === 5;
+const validateInput = (value: string, key: string) => {
+  const isEmpty = value.trim() === "";
+  const isPostalCode = key === "postalCode" && value.length === 5;
+  return !isEmpty && isPostalCode;
+};
 
-export const Checkout: React.FC<ICheckoutProps> = (props) => {
+export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
   const context = useContext(CartContext);
   const [data, setData] = useState<CheckoutType>();
   const response = useHTTP({
@@ -24,7 +26,9 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
   useEffect(() => {
     response.useHttpHandler();
   }, [data]);
-  const [formInputValidity, setFormInputValidity] = useState({
+  const [formInputValidity, setFormInputValidity] = useState<{
+    [key: string]: boolean;
+  }>({
     name: true,
     city: true,
     street: true,
@@ -40,12 +44,14 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
     event.preventDefault();
     const name = nameInputRef.current!.value;
     const street = streetInputRef.current!.value;
-    const postal: number = parseInt(postalInputRef.current!.value);
+    const postal = postalInputRef.current!.value;
     const city = cityInputRef.current!.value;
-    const nameIsValid = !isEmpty(name);
-    const streetIsValid = !isEmpty(street);
-    const postalIsValid = isFiveChars(postal);
-    const cityIsValid = !isEmpty(city);
+
+    const nameIsValid = validateInput(name, "name");
+    const streetIsValid = validateInput(street, "street");
+    const postalIsValid = validateInput(postal, "postalCode");
+    const cityIsValid = validateInput(city, "city");
+
     const formIsValid =
       nameIsValid && streetIsValid && postalIsValid && cityIsValid;
     setFormInputValidity({
@@ -62,7 +68,7 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
       name: name,
       city: city,
       street: street,
-      postalCode: postal,
+      postalCode: parseInt(postal),
       meals: context.items,
     };
     setData(data);
@@ -133,7 +139,7 @@ export const Checkout: React.FC<ICheckoutProps> = (props) => {
         </div>
       </div>
       <div className={classes.actions}>
-        <button type="button" onClick={props.onCancel}>
+        <button type="button" onClick={onCancel}>
           Cancel
         </button>
         <button onClick={confirmHandler} className={classes.submit}>
