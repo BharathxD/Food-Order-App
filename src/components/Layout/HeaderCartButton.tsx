@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
+import classes from "./HeaderCartButton.module.css";
+
 import CartContext from "../../Context/cartContext";
 import { CartIcon } from "../Cart/CartIcon";
-import classes from "./HeaderCartButton.module.css";
 
 export const HeaderCartButton: React.FC<{ onClickHandler: () => void }> = (
   props

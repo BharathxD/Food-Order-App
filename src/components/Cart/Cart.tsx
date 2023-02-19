@@ -6,11 +6,9 @@ import { Modal } from "../UI/Modal";
 import { CartItem } from "./CartItem";
 import { ProductCartType } from "../../Types/ProductCart.types";
 import { Checkout } from "./Checkout";
-import { CheckoutType } from "../../Types/Checkout.types";
 
 export const Cart: React.FC<{ onCloseCart(): void }> = (props) => {
   const [isCheckout, setIsCheckout] = useState<boolean>(false);
-  const [checkout, setCheckout] = useState<CheckoutType[]>([]);
   const context = useContext(CartContext);
   const totalAmount =
     context.totalAmount < 1 ? `$0` : `$${context.totalAmount.toFixed(2)}`;

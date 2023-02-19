@@ -23,6 +23,8 @@
   border-radius: 10px;
   padding: 0.1rem 0.5rem;
   width: 20rem;
+  color: #1c1b1b;
+  background-color: #fff;
   max-width: 100%;
 }
 
@@ -89,5 +91,6 @@
 
 .invalid input {
   border-color: #aa0b20;
+  color: #1c1b1b;
   background-color: #ffeff1;
 }

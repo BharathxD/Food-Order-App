@@ -5,15 +5,11 @@ import { CheckoutType } from "../../Types/Checkout.types";
 import { useHTTP } from "../../Hooks/useHTTP";
 import CartContext from "../../Context/cartContext";
 
-interface ICheckoutProps {
-  onCancel(): void;
-}
-
 const isEmpty = (value: string) =>
   value.trim() === "" && value.trim().length === 0;
 const isFiveChars = (value: string) => value.trim().length === 5;
 
-export const Checkout: React.FC<ICheckoutProps> = ({ onCancel }) => {
+export const Checkout: React.FC<{onCancel(): void}> = ({ onCancel }) => {
   const context = useContext(CartContext);
   const [data, setData] = useState<CheckoutType>();
   const response = useHTTP({
